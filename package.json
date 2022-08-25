@@ -1,8 +1,18 @@
 {
   "name": "swap-header-source",
   "displayName": "Header Source Swap",
-  "description": "Quickly swap between C++ header and source files",
+  "description": "A Visual Studio Code extension to quickly swap between C++ header and source files",
   "version": "1.0.0",
+  "publisher": "nteymory",
+  "bugs": {
+    "uri": "https://github.com/nteymory/swap-header-source/issues"
+  },
+  "homepage": "https://github.com/nteymory/swap-header-source",
+  "repository": {
+    "url": "https://github.com/nteymory/swap-header-source",
+    "type": "github"
+  },
+  "license": "MIT",
   "engines": {
     "vscode": "^1.70.0"
   },
