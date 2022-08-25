@@ -1,4 +1,4 @@
-# Swap Header/Source
+# Swap Header Source
 
 A Visual Studio Code extension to _quickly_ swap between C++ header and source files.
 

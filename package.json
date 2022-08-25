@@ -1,6 +1,6 @@
 {
   "name": "swap-header-source",
-  "displayName": "Header Source Swap",
+  "displayName": "Swap Header Source",
   "description": "A Visual Studio Code extension to quickly swap between C++ header and source files",
   "version": "1.0.0",
   "publisher": "nteymory",
