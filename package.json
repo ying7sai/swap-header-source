@@ -1,0 +1,80 @@
+{
+  "name": "swap-header-source",
+  "displayName": "Header Source Swap",
+  "description": "Quickly swap between C++ header and source files",
+  "version": "1.0.0",
+  "engines": {
+    "vscode": "^1.70.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onCommand:swap-header-source.swap"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "swap-header-source.swap",
+        "title": "Swap Header/Source"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "swap-header-source.swap",
+        "key": "alt+o"
+      }
+    ],
+    "configuration": {
+      "title": "Settings for swap-header-source",
+      "type": "object",
+      "properties": {
+        "swapHeaderSource.headerExtensions": {
+          "type": "array",
+          "description": "Extensions associated with C++ header files",
+          "default": [
+            ".h",
+            ".hh",
+            ".hpp"
+          ]
+        },
+        "swapHeaderSource.sourceExtensions": {
+          "type": "array",
+          "description": "Extensions associated with C++ source files",
+          "default": [
+            ".c",
+            ".cc",
+            ".cpp"
+          ]
+        },
+        "swapHeaderSource.disableCaching": {
+          "type": "boolean",
+          "description": "Disable caching functionality",
+          "default": false
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.70.0",
+    "@types/glob": "^7.2.0",
+    "@types/mocha": "^9.1.1",
+    "@types/node": "16.x",
+    "@typescript-eslint/eslint-plugin": "^5.31.0",
+    "@typescript-eslint/parser": "^5.31.0",
+    "eslint": "^8.20.0",
+    "glob": "^8.0.3",
+    "mocha": "^10.0.0",
+    "typescript": "^4.7.4",
+    "@vscode/test-electron": "^2.1.5"
+  }
+}
