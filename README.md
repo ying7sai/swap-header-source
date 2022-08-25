@@ -1,6 +1,6 @@
 # Swap Header/Source
 
-_Quickly_ swap between C++ header and source files.
+A Visual Studio Code extension to _quickly_ swap between C++ header and source files.
 
 I made this extension for personal use out of frustration at how slow the builtin C/C++ swapping functionality is for larger projects. 
 
