@@ -24,6 +24,22 @@ async function openFile(path: string): Promise<void> {
 	await vscode.window.showTextDocument(document);
 }
 
+async function readdirRecursive(dir: string): Promise<string[]> {
+    const files = await fs.promises.readdir(dir);
+    const subdirs = await Promise.all(
+      files.map(async (file) => {
+        const filePath = dir + '/' + file;
+        const stats = await fs.promises.stat(filePath);
+        if (stats.isDirectory()) {
+          return await readdirRecursive(filePath);
+        }
+        return [];
+      })
+    );
+    const fullPathFiles = files.map(file => path.join(dir, file));
+    return fullPathFiles.concat(...subdirs);
+}
+
 async function findSwapFile(fileInfo: path.ParsedPath): Promise<string | undefined> {
 
 	// Get extension configuration
@@ -35,7 +51,6 @@ async function findSwapFile(fileInfo: path.ParsedPath): Promise<string | undefin
 	const searchExts = headerExts.indexOf(fileInfo.ext) >= 0 ? 
 						sourceExts :
 						headerExts;
-
 
 	let result;
 
@@ -52,6 +67,24 @@ async function findSwapFile(fileInfo: path.ParsedPath): Promise<string | undefin
 		result = path.join(fileInfo.dir, result); // Return the full path
 		return result;
 	}
+
+    // Search in common parent folder of "include" and "src"
+    let dirs = fileInfo.dir.split(path.sep);
+    let commonParentIndex = [dirs.indexOf("include"), dirs.indexOf("src")].find(i => i !== -1);
+    if(commonParentIndex !== undefined) {
+        let commonParent = dirs.slice(0, commonParentIndex).join(path.sep);
+        const dirFiles = await readdirRecursive(commonParent);
+        result = dirFiles.find((dirFile: string) => {
+            const dirFileInfo = path.parse(dirFile);
+            return dirFileInfo.name === fileInfo.name        // Does the file name match?
+                && searchExts.indexOf(dirFileInfo.ext) >= 0; // Does the extension match one of the extensions we are looking for?
+        });
+
+        // If we found something, then we are done
+        if(result) {
+            return result;
+        }
+    }
 
 	// There was no match in the current directory, so lets look in the workspace next
 
